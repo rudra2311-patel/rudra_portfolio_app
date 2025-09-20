@@ -216,7 +216,7 @@ final List<JobExperience> jobExperiences = [
 ];
 
 const String resume =
-    "https://drive.google.com/file/d/1nmWHnTMTUSv4haJoPzJ31j3CzUQ1PWLf/view?usp=drive_link";
+    "https://drive.google.com/file/d/1nmWHnTMTUSv4haJoPzJ31j3CzUQ1PWLf/view?usp=sharing";
 const String linkedIn = "https://www.linkedin.com/in/rudra-patel-32859425b/";
 const String github = "https://github.com/rudra2311-patel";
 const String codeforces = "https://codeforces.com/profile/RuDrA1e3";

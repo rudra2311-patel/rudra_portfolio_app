@@ -144,7 +144,7 @@ class HomePage extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: AutoSizeText(
-                                          'RuDraPatel Nice',
+                                          'RuDraPatel',
                                           style: GoogleFonts.exo(
                                             fontSize: 35,
                                             color: Colors.white,

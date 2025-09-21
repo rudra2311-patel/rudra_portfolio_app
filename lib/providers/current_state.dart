@@ -18,12 +18,20 @@ class CurrentState extends ChangeNotifier {
 
   Offset get mousePosition => _mousePosition;
 
-  // NEW: A map to store GlobalKeys for your icons.
-  // We use String as the key (e.g., 'about', 'skills')
   final Map<String, GlobalKey> _keys = {};
 
-  // NEW: A method to get a key for a specific icon.
-  // If a key doesn't exist, it creates one.
+  // NEW: Flag to track if we are in dark mode. Initialized to false.
+  bool isDarkMode = false;
+
+  // NEW: Define your universal dark theme assets
+  final Gradient _darkGradient = const LinearGradient(
+    colors: [Color(0xff0b0033), Color(0xff000000)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+  final String _darkCloud =
+      "assets/images/night_cloud.svg"; // Make sure this asset exists
+
   GlobalKey getKey(String keyName) {
     if (!_keys.containsKey(keyName)) {
       _keys[keyName] = GlobalKey();
@@ -46,10 +54,28 @@ class CurrentState extends ChangeNotifier {
 
   Widget currentScreen = const PhoneHomeScreen();
 
+  // UPDATED: This function now also sets dark mode to false
   void changeGradient(int index) {
+    isDarkMode = false;
     selectedColor = index;
     bgGradient = colorPalette[index].gradient;
     selectedCloud = colorPalette[index].svgPath;
+    notifyListeners();
+  }
+
+  // UPDATED: This function toggles the day/night theme
+  void toggleTheme() {
+    isDarkMode = !isDarkMode;
+
+    if (isDarkMode) {
+      // Switch to Night Mode
+      bgGradient = _darkGradient;
+      selectedCloud = _darkCloud;
+    } else {
+      // Switch back to the last selected color theme
+      changeGradient(selectedColor);
+    }
+
     notifyListeners();
   }
 

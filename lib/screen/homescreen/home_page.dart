@@ -10,14 +10,12 @@ import 'package:portfolio_app/providers/current_state.dart';
 import 'package:portfolio_app/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
+// NEW: Import your Rive background widget
+import '../../widgets/rive_background.dart';
 import '../../widgets/frosted_container.dart';
 import '../../widgets/rain_cloud.dart';
 import 'phone_screen_wrapper.dart';
 
-/// HomePage widget that implements the layered 3D Parallax Portfolio UI.
-/// Updated to include:
-/// 1. Static zone for the phone (no rotation applied).
-/// 2. Restored static tilt for side panels with added dynamic parallax.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -27,13 +25,9 @@ class HomePage extends StatelessWidget {
     CurrentState currentState =
         Provider.of<CurrentState>(context, listen: false);
     Size size = MediaQuery.of(context).size;
-
-    // Ratios for scaling relative to base size
     theme.size = MediaQuery.of(context).size;
     theme.widthRatio = theme.size.width / baseWidth;
     theme.heightRatio = theme.size.height / baseHeight;
-
-    // Mobile breakpoint
     bool phone = size.width < 800;
 
     return MouseRegion(
@@ -46,9 +40,20 @@ class HomePage extends StatelessWidget {
         body: Stack(
           alignment: Alignment.center,
           children: [
-            // ===========================
-            // Layer 1: Background
-            // ===========================
+            // Layer 1: The dynamic gradient from your provider
+            Consumer<CurrentState>(
+              builder: (context, state, child) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  decoration: BoxDecoration(gradient: state.bgGradient),
+                );
+              },
+            ),
+
+            // Layer 2: The new Rive Animation (Sun/Moon/Stars)
+            RiveBackground(),
+
+            // This Stack contains your original parallax background elements
             Consumer<CurrentState>(
               builder: (context, state, child) {
                 final dx = state.mousePosition.dx;
@@ -66,15 +71,6 @@ class HomePage extends StatelessWidget {
               },
               child: Stack(
                 children: [
-                  Selector<CurrentState, Gradient>(
-                    selector: (context, provider) => provider.bgGradient,
-                    builder: (context, _, __) {
-                      return Container(
-                        decoration:
-                            BoxDecoration(gradient: currentState.bgGradient),
-                      );
-                    },
-                  ),
                   size.height > 600
                       ? const Rain(oposite: false, top: 300)
                       : Container(),
@@ -95,9 +91,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
 
-            // ===========================
-            // Layer 2: Foreground Content
-            // ===========================
+            // Layer 3: Your main UI content
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -105,27 +99,19 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // =====================================
-                    // LEFT SIDE FROSTED CONTAINERS
-                    // =====================================
+                    /// Left side frosted Containers
                     Consumer<CurrentState>(
                       builder: (context, state, child) {
                         final dx = state.mousePosition.dx;
                         final dy = state.mousePosition.dy;
-
-                        // Restored static tilt for left panel
-                        const baseRotationY = -0.25; // original inward tilt
-                        const baseRotationX = 0.05;
-
-                        // Add subtle dynamic rotation on top
+                        const baseRotationY = -0.06;
                         final dynamicRotationY = (dx * dx.abs()) * 0.1;
                         final dynamicRotationX = -(dy * dy.abs()) * 0.1;
-
                         return Transform(
                           alignment: FractionalOffset.center,
                           transform: Matrix4.identity()
                             ..setEntry(3, 2, 0.001)
-                            ..rotateX(baseRotationX + dynamicRotationX)
+                            ..rotateX(dynamicRotationX)
                             ..rotateY(baseRotationY + dynamicRotationY),
                           child: child,
                         );
@@ -222,10 +208,7 @@ class HomePage extends StatelessWidget {
                                   curve: Curves.easeOut),
                     ),
 
-                    // =====================================
-                    // MAIN PHONE (STATIC ZONE)
-                    // =====================================
-                    // The phone no longer rotates with the mouse
+                    // main mobile screen
                     SizedBox(
                       height: size.height - 100,
                       child: Consumer<CurrentState>(
@@ -250,27 +233,19 @@ class HomePage extends StatelessWidget {
                             duration: 600.ms,
                             curve: Curves.easeOut),
 
-                    // =====================================
-                    // RIGHT SIDE FROSTED CONTAINERS
-                    // =====================================
+                    /// Right side frosted containers
                     Consumer<CurrentState>(
                       builder: (context, state, child) {
                         final dx = state.mousePosition.dx;
                         final dy = state.mousePosition.dy;
-
-                        // Restored static tilt for right panel
-                        const baseRotationY = 0.25; // original inward tilt
-                        const baseRotationX = 0.05;
-
-                        // Add subtle dynamic rotation on top
+                        const baseRotationY = 0.06;
                         final dynamicRotationY = (dx * dx.abs()) * 0.1;
                         final dynamicRotationX = -(dy * dy.abs()) * 0.1;
-
                         return Transform(
                           alignment: FractionalOffset.center,
                           transform: Matrix4.identity()
                             ..setEntry(3, 2, 0.001)
-                            ..rotateX(baseRotationX + dynamicRotationX)
+                            ..rotateX(dynamicRotationX)
                             ..rotateY(baseRotationY + dynamicRotationY),
                           child: child,
                         );
@@ -373,12 +348,9 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 10 * theme.heightRatio),
 
-                // ===========================
-                // BOTTOM: DEVICE SWITCHER
-                // ===========================
+                /// bottom button for device selection
                 Selector<CurrentState, DeviceInfo>(
                   selector: (context, p1) => p1.currentDevice,
                   builder: (context, _, __) {
@@ -409,6 +381,28 @@ class HomePage extends StatelessWidget {
                   },
                 )
               ],
+            ),
+
+            // NEW: Add a Toggle Button to switch between Day and Night
+            Positioned(
+              top: 40,
+              right: 40,
+              child: IconButton(
+                icon: Consumer<CurrentState>(builder: (context, state, child) {
+                  // The icon changes based on the current mode
+                  return Icon(
+                    state.isDarkMode
+                        ? Icons.wb_sunny_outlined
+                        : Icons.nights_stay_outlined,
+                    color: Colors.white,
+                    size: 30,
+                  );
+                }),
+                onPressed: () {
+                  // This calls the function that changes the theme and Rive state
+                  currentState.toggleTheme();
+                },
+              ),
             ),
           ],
         ),

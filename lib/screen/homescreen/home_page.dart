@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_app/consts/data.dart';
 import 'package:portfolio_app/providers/current_state.dart';
 import 'package:portfolio_app/providers/theme_provider.dart';
+import 'package:portfolio_app/widgets/rive_avatar.dart';
 import 'package:provider/provider.dart';
 
 // NEW: Import your Rive background widget
@@ -51,7 +52,7 @@ class HomePage extends StatelessWidget {
             ),
 
             // Layer 2: The new Rive Animation (Sun/Moon/Stars)
-            RiveBackground(),
+            const RiveBackground(),
 
             // This Stack contains your original parallax background elements
             Consumer<CurrentState>(
@@ -122,31 +123,58 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FrostedWidget(
-                                  childW: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: AutoSizeText(
-                                          'RuDraPatel',
-                                          style: GoogleFonts.exo(
-                                            fontSize: 35,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxFontSize: 35,
-                                          minFontSize: 15,
-                                          maxLines: 1,
-                                        ).animate().fadeIn(
-                                            delay: .8.seconds,
-                                            duration: .7.seconds),
-                                      ),
-                                    ),
-                                  ),
                                   height: 395 * theme.heightRatio,
                                   width: 247.5 * theme.widthRatio,
+                                  //
+                                  // REPLACE the existing `childW` property with the new Column below
+                                  //
+                                  // In home_page.dart, inside the top-left FrostedWidget
+                                  childW: Column(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .start, // Align to the top
+                                    children: [
+                                      // Use SizedBox for fixed spacing from the top
+                                      const SizedBox(height: 30),
+
+                                      // Your title text
+                                      AutoSizeText(
+                                        'Designer',
+                                        style: GoogleFonts.exo(
+                                          fontSize: 22,
+                                          color: Colors.white.withOpacity(0.8),
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        maxLines: 1,
+                                      ),
+
+                                      // The Rive Avatar
+                                      const Expanded(
+                                        child: RiveAvatar(),
+                                      ),
+
+                                      // Your name text
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        child: Center(
+                                          child: AutoSizeText(
+                                            'RuDraPatel',
+                                            style: GoogleFonts.exo(
+                                              fontSize: 35,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxFontSize: 35,
+                                            minFontSize: 15,
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Use SizedBox for fixed spacing at the bottom
+                                      const SizedBox(height: 20),
+                                    ],
+                                  ),
                                 ),
                                 FrostedWidget(
                                   onPressed: () {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_button/animated_button.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:device_frame/device_frame.dart';
@@ -17,8 +19,33 @@ import '../../widgets/frosted_container.dart';
 import '../../widgets/rain_cloud.dart';
 import 'phone_screen_wrapper.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Timer? _themeTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start a timer that runs every 30 seconds
+    _themeTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      // Get the provider and call the toggle function
+      final currentState = Provider.of<CurrentState>(context, listen: false);
+      currentState.toggleTheme();
+    });
+  }
+
+  @override
+  void dispose() {
+    // IMPORTANT: Cancel the timer when the widget is removed
+    _themeTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

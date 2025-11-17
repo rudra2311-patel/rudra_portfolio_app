@@ -16,6 +16,7 @@ class Skills extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // ----------------- SKILLS -----------------
                 Wrap(
                   alignment: WrapAlignment.center,
                   children: [
@@ -23,51 +24,54 @@ class Skills extends StatelessWidget {
                       skills.length,
                       (index) => Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 5),
-                        margin: const EdgeInsets.all(10),
+                            horizontal: 12, vertical: 8),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color(0xffeff0e0),
-                            border: Border.all(color: skills[index].colorS)),
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xffeff0e0),
+                          border: Border.all(color: skills[index].colorS),
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               skills[index].skillName,
                               style: GoogleFonts.openSans(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            // skills[index].iconPath != null
-                            //     ? Padding(
-                            //         padding: const EdgeInsets.only(left: 10),
-                            //         child: SvgPicture.asset(
-                            //           "assets/icons/flutter.svg",
-                            //           height: 20,
-                            //         ))
-                            //     : Container()
+                            if (skills[index].iconPath != null)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Icon(
+                                  Icons.check_circle_outline,
+                                  size: 18,
+                                  color: skills[index].colorS,
+                                ),
+                              ),
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Divider(
-                  color: Colors.grey,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+
+                const SizedBox(height: 25),
+                const Divider(color: Colors.grey),
+                const SizedBox(height: 20),
+
+                // ----------------- LANGUAGES -----------------
                 Text(
                   "Languages",
                   style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold, fontSize: 25),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+
+                const SizedBox(height: 10),
+
                 Wrap(
                   alignment: WrapAlignment.center,
                   children: [
@@ -75,26 +79,32 @@ class Skills extends StatelessWidget {
                       languages.length,
                       (index) => Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 5),
-                        margin: const EdgeInsets.all(10),
+                            horizontal: 12, vertical: 6),
+                        margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: const Color(0xffeff0e0),
-                            border: Border.all(color: languages[index].colorS)),
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xffeff0e0),
+                          border: Border.all(color: languages[index].colorS),
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               languages[index].skillName,
-                              style: GoogleFonts.inter(fontSize: 14),
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            languages[index].iconPath != null
-                                ? const Icon(Icons.flutter_dash)
-                                : Container()
+                            if (languages[index].iconPath != null)
+                              const Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Icon(Icons.language),
+                              ),
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

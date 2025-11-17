@@ -36,7 +36,6 @@ List<ColorModel> colorPalette = [
     color: Colors.yellowAccent,
     gradient: const LinearGradient(
       begin: Alignment.bottomLeft,
-      // transform: Grad,
       end: Alignment.topRight,
       colors: [Colors.yellowAccent, Colors.deepOrange],
     ),
@@ -50,14 +49,15 @@ List<ColorModel> colorPalette = [
     ),
   ),
   ColorModel(
-      svgPath: "assets/images/cloudyBlue.svg",
-      color: const Color(0xff00d6ca),
-      gradient: const LinearGradient(
-        colors: [Color(0xff00ebd5), Color(0xff293474)],
-        stops: [0, 1],
-        begin: Alignment.bottomRight,
-        end: Alignment.topLeft,
-      )),
+    svgPath: "assets/images/cloudyBlue.svg",
+    color: const Color(0xff00d6ca),
+    gradient: const LinearGradient(
+      colors: [Color(0xff00ebd5), Color(0xff293474)],
+      stops: [0, 1],
+      begin: Alignment.bottomRight,
+      end: Alignment.topLeft,
+    ),
+  ),
   ColorModel(
     svgPath: "assets/images/cloudyBlue.svg",
     color: const Color(0xff123cd1),
@@ -83,7 +83,7 @@ List<ColorModel> colorPalette = [
     gradient: const LinearGradient(
       begin: Alignment.bottomLeft,
       end: Alignment.topRight,
-      colors: [Colors.indigo, Colors.deepOrange], // Adjust colors as needed
+      colors: [Colors.indigo, Colors.deepOrange],
     ),
   ),
 ];
@@ -94,53 +94,62 @@ List<AppModel> apps = [
       color: Colors.white,
       icon: Icons.person,
       screen: const AboutMe()),
+
   AppModel(
       title: "Skills",
       color: Colors.white,
       icon: Icons.ac_unit_rounded,
       screen: const Skills()),
+
   AppModel(
     title: "Resume",
     color: Colors.white,
-    icon: Icons.description, // ✅ inbuilt icon instead of youtube.svg
+    icon: Icons.description,
     link: resume,
   ),
+
   AppModel(
     title: "LinkedIn",
     assetPath: "assets/icons/linkedin.svg",
     color: Colors.white,
     link: linkedIn,
   ),
+
   AppModel(
     title: "CodeForces",
     assetPath: "assets/icons/download.svg",
     color: Colors.white,
     link: codeforces,
   ),
+
   AppModel(
     title: "LeetCode",
     assetPath: "assets/icons/leetcode.svg",
     color: Colors.white,
     link: leetcode,
   ),
+
   AppModel(
     title: "Achievements",
     color: Colors.white,
-    icon: FontAwesomeIcons.trophy, // Updated icon
+    icon: FontAwesomeIcons.trophy,
     screen: const Experience(),
   ),
+
   AppModel(
     title: "Education",
     color: Colors.white,
-    icon: Icons.school, // 🎓 better icon for education
+    icon: Icons.school,
     screen: const Education(),
   ),
+
   AppModel(
     title: "Github",
     assetPath: "assets/icons/github.svg",
     color: Colors.white,
     link: github,
   ),
+
   AppModel(
     title: "Email",
     assetPath: "assets/icons/Gmail_Logo.svg",
@@ -153,8 +162,8 @@ final List<JobExperience> education = [
   JobExperience(
     color: Colors.red,
     location: "Gujrat, India",
-    title: 'Computer Science and  Engineering',
-    company: 'Indian Institute of Information and Technology Vadodara(IIITV)',
+    title: 'Computer Science and Engineering',
+    company: 'Indian Institute of Information and Technology Vadodara (IIITV)',
     startDate: '2022',
     endDate: 'Present',
     bulletPoints: [
@@ -165,7 +174,7 @@ final List<JobExperience> education = [
     color: Colors.blue,
     location: "Vadodara Gujrat, India",
     title: 'Higher Secondary School',
-    company: 'Parth Institute ',
+    company: 'Parth Institute',
     startDate: 'June 2019',
     endDate: 'June 2022',
     bulletPoints: [
@@ -173,6 +182,7 @@ final List<JobExperience> education = [
     ],
   ),
 ];
+
 final List<JobExperience> jobExperiences = [
   JobExperience(
     color: Colors.deepPurple,
@@ -196,8 +206,8 @@ final List<JobExperience> jobExperiences = [
     startDate: '',
     endDate: '',
     bulletPoints: [
-      "Top 5 Finalist in a VR Project competition at IIITV, receiving a Rs. 5,000 grant for further research.",
-      "Secured 5th rank in the competitive Mathematics event (Enigma) at IIITV.",
+      "Top 5 Finalist in a VR Project competition at IIITV, receiving a Rs. 5,000 grant.",
+      "Secured 5th rank in the Mathematics event (Enigma).",
     ],
   ),
   JobExperience(
@@ -208,15 +218,15 @@ final List<JobExperience> jobExperiences = [
     startDate: '',
     endDate: '',
     bulletPoints: [
-      "Served as Marketing Lead, executing a digital marketing campaign that increased student engagement by 60%.",
-      "Organized the Annual Gaming Fest (Arcadia), attracting over 200 student participants.",
-      "Core Member of the College Gaming Club, responsible for organizing tournaments for 150+ participants.",
+      "Executed a digital marketing campaign increasing engagement by 60%.",
+      "Organized Annual Gaming Fest (Arcadia) with 200+ participants.",
+      "Core Member of Gaming Club: organized tournaments for 150+ participants.",
     ],
   ),
 ];
 
 const String resume =
-    "https://drive.google.com/file/d/1nmWHnTMTUSv4haJoPzJ31j3CzUQ1PWLf/view?usp=sharing";
+    "https://drive.google.com/file/d/1N5JOPis97cetgoR9GDeVh3asTPASTsj4/view";
 const String linkedIn = "https://www.linkedin.com/in/rudra-patel-32859425b/";
 const String github = "https://github.com/rudra2311-patel";
 const String codeforces = "https://codeforces.com/profile/RuDrA1e3";
@@ -224,56 +234,54 @@ const String resumeLink =
     "https://drive.google.com/file/d/1LO3Km6fFkJVW92MNXRLSYl--E9YlTHJd/view";
 const String email = "rudrawillofd@gmail.com";
 const String leetcode = "https://leetcode.com/u/K2HtnEmE3O/";
-String introduction =
-    "Welcome to my portfolio website — a little corner of the internet where I build, break, and rebuild things (sometimes intentionally 😅).\n\n"
-    "I am a Developer with a strong focus on Flutter and a never-ending love for problem-solving. Whether it’s fixing a tricky bug, finding the most efficient way to write code, or cracking a tough chess puzzle, I enjoy challenges that make me think differently. My curiosity often leads me down rabbit holes of figuring out how things actually work under the hood — from apps to algorithms.\n\n"
-    "When I’m not coding, you’ll probably find me watching a good series, exploring random tech stuff, or staring at a chessboard trying to outsmart myself.";
-
 const String playApps =
     "https://play.google.com/store/apps/developer?id=AppyMonk";
 
+String introduction =
+    "Welcome to my portfolio website — a little corner of the internet where I build, break, and rebuild things.\n\n"
+    "I am a Developer focused on Flutter, backend engineering, and solving real-world problems. "
+    "I love diving deep into how things work — from apps to algorithms.\n\n"
+    "Outside tech, I enjoy watching series, spending time on random tech exploration, or playing chess.";
+
+
+/// --------------------------------------------------------------
+/// UPDATED SKILLS LIST (as requested)
+/// --------------------------------------------------------------
+
 List<SkillsModel> skills = [
-  SkillsModel(skillName: "Flutter", colorS: Colors.blue, iconPath: "random"),
-  SkillsModel(
-    skillName: "Firebase",
-    colorS: Colors.yellow,
-  ),
-  SkillsModel(
-    skillName: "Github",
-    colorS: Colors.yellow,
-  ),
-  SkillsModel(
-    skillName: "Dart",
-    colorS: Colors.blue,
-  ),
-  SkillsModel(
-    skillName: "Provider",
-    colorS: Colors.orange,
-  ),
-  SkillsModel(
-    skillName: "Riverpod",
-    colorS: Colors.blue,
-  ),
-  SkillsModel(
-    skillName: "CI/CD",
-    colorS: Colors.yellow,
-  ),
-  SkillsModel(
-    skillName: "Code Magic",
-    colorS: Colors.orange,
-  ),
-  SkillsModel(
-    skillName: "Firebase",
-    colorS: Colors.yellow,
-  ),
-  SkillsModel(
-    skillName: "REST API",
-    colorS: Colors.yellow,
-  ),
+  /// Mobile Development
+  SkillsModel(skillName: "Flutter", colorS: Colors.blue),
+  SkillsModel(skillName: "Dart", colorS: Colors.lightBlue),
+
+  /// State Management
+  SkillsModel(skillName: "Provider", colorS: Colors.orange),
+  SkillsModel(skillName: "Riverpod", colorS: Colors.green),
+  SkillsModel(skillName: "BLoC", colorS: Colors.deepPurple),
+
+  /// Backend Development
+  SkillsModel(skillName: "FastAPI", colorS: Colors.teal),
+  SkillsModel(skillName: "PostgreSQL", colorS: Colors.indigo),
+  SkillsModel(skillName: "Redis", colorS: Colors.redAccent),
+  SkillsModel(skillName: "REST APIs", colorS: Colors.blueGrey),
+  SkillsModel(skillName: "JWT Auth", colorS: Colors.deepOrange),
+
+  /// Deployment & DevOps
+  SkillsModel(skillName: "Docker", colorS: Colors.blueAccent),
+  SkillsModel(skillName: "CI/CD", colorS: Colors.greenAccent),
+  SkillsModel(skillName: "CodeMagic", colorS: Colors.orangeAccent),
+
+  /// Firebase / Real-Time
+  SkillsModel(skillName: "Firebase", colorS: Colors.yellow),
+
+  /// UI / Animation
+  SkillsModel(skillName: "Rive Animations", colorS: Colors.purpleAccent),
+
+  /// Tools
+  SkillsModel(skillName: "Git & GitHub", colorS: Colors.black),
 ];
 
 List<SkillsModel> languages = [
   SkillsModel(skillName: "Gujarati", colorS: Colors.orange),
-  SkillsModel(skillName: "Hindi", colorS: Colors.black),
+  SkillsModel(skillName: "Hindi", colorS: Colors.redAccent),
   SkillsModel(skillName: "English", colorS: Colors.blueGrey),
 ];

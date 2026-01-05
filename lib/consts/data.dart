@@ -90,66 +90,62 @@ List<ColorModel> colorPalette = [
 
 List<AppModel> apps = [
   AppModel(
+      title: "PhytoLens",
+      assetPath: "assets/icons/phytolens.svg",
+      color: Colors.white,
+      link: "https://chic-taffy-7be25a.netlify.app/"),
+  AppModel(
       title: "About",
       color: Colors.white,
       icon: Icons.person,
       screen: const AboutMe()),
-
   AppModel(
       title: "Skills",
       color: Colors.white,
       icon: Icons.ac_unit_rounded,
       screen: const Skills()),
-
   AppModel(
     title: "Resume",
     color: Colors.white,
     icon: Icons.description,
     link: resume,
   ),
-
   AppModel(
     title: "LinkedIn",
     assetPath: "assets/icons/linkedin.svg",
     color: Colors.white,
     link: linkedIn,
   ),
-
   AppModel(
     title: "CodeForces",
     assetPath: "assets/icons/download.svg",
     color: Colors.white,
     link: codeforces,
   ),
-
   AppModel(
     title: "LeetCode",
     assetPath: "assets/icons/leetcode.svg",
     color: Colors.white,
     link: leetcode,
   ),
-
   AppModel(
     title: "Achievements",
     color: Colors.white,
     icon: FontAwesomeIcons.trophy,
     screen: const Experience(),
   ),
-
   AppModel(
     title: "Education",
     color: Colors.white,
     icon: Icons.school,
     screen: const Education(),
   ),
-
   AppModel(
     title: "Github",
     assetPath: "assets/icons/github.svg",
     color: Colors.white,
     link: github,
   ),
-
   AppModel(
     title: "Email",
     assetPath: "assets/icons/Gmail_Logo.svg",
@@ -242,7 +238,6 @@ String introduction =
     "I am a Developer focused on Flutter, backend engineering, and solving real-world problems. "
     "I love diving deep into how things work — from apps to algorithms.\n\n"
     "Outside tech, I enjoy watching series, spending time on random tech exploration, or playing chess.";
-
 
 /// --------------------------------------------------------------
 /// UPDATED SKILLS LIST (as requested)

@@ -1,0 +1,239 @@
+/* ===================================
+   UI Polish & Enhancement Styles
+   =================================== */
+
+/* Section Fade-In Animation */
+section {
+    animation: sectionFadeIn 0.8s ease-out;
+}
+
+@keyframes sectionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Section Dividers with Gradient */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(16, 185, 129, 0.5) 50%, 
+        transparent 100%);
+    margin: 4rem 0;
+}
+
+/* Enhanced Section Headers */
+section h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 1rem;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #10B981, transparent);
+    border-radius: 2px;
+}
+
+/* Category Headers with Line Effect */
+.flex.items-center.justify-center.gap-3.mb-8 h3 {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+}
+
+/* Horizontal Divider Lines Enhancement */
+.h-px {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(16, 185, 129, 0.3) 50%, 
+        transparent 100%) !important;
+    height: 2px !important;
+}
+
+/* Contact Card Improvements */
+#contact a.group {
+    position: relative;
+    overflow: hidden;
+}
+
+#contact a.group::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.05) 0%, 
+        transparent 50%);
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+#contact a.group:hover::before {
+    opacity: 1;
+}
+
+#contact a.group:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(16, 185, 129, 0.3),
+                0 15px 30px rgba(16, 185, 129, 0.2);
+}
+
+/* Profile Section Enhancement */
+#contact .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+}
+
+#contact .bg-gradient-to-r::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, 
+        rgba(16, 185, 129, 0.1) 0%, 
+        transparent 70%);
+    animation: rotateGradient 10s linear infinite;
+}
+
+@keyframes rotateGradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer Social Icons Enhancement */
+footer a svg {
+    transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+footer a:hover svg {
+    transform: translateY(-5px) rotate(5deg);
+    filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.5));
+}
+
+/* Metrics Cards Enhancement */
+#metrics .card-hover {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.02) 0%, 
+        transparent 100%);
+}
+
+#metrics .card-hover:hover {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.08) 0%, 
+        rgba(16, 185, 129, 0.02) 100%);
+}
+
+/* Tech Stack Grid Enhancement */
+#stack .grid > div {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.02) 0%, 
+        transparent 100%);
+}
+
+#stack .grid > div:hover {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.06) 0%, 
+        rgba(16, 185, 129, 0.02) 100%);
+}
+
+/* Gallery Item Title Enhancement */
+.gallery-item-title {
+    background: linear-gradient(to top, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(0, 0, 0, 0.7) 50%,
+        transparent 100%);
+    backdrop-filter: blur(8px);
+}
+
+/* Smooth Scroll Snap for Gallery */
+.gallery-scroll {
+    scroll-snap-type: x proximity;
+}
+
+.gallery-item {
+    scroll-snap-align: start;
+}
+
+/* Loading State for Images */
+img {
+    transition: opacity 400ms ease;
+}
+
+img[loading="lazy"] {
+    opacity: 0;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* Focus States for Accessibility */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #10B981;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Selection Styling */
+::selection {
+    background: rgba(16, 185, 129, 0.3);
+    color: #fff;
+}
+
+::-moz-selection {
+    background: rgba(16, 185, 129, 0.3);
+    color: #fff;
+}
+
+/* Backdrop Blur Support */
+@supports (backdrop-filter: blur(20px)) {
+    nav {
+        backdrop-filter: blur(20px);
+    }
+    
+    .modal-lightbox {
+        backdrop-filter: blur(20px);
+    }
+}
+
+/* Print Styles */
+@media print {
+    nav,
+    footer,
+    .modal-lightbox {
+        display: none !important;
+    }
+    
+    section {
+        page-break-inside: avoid;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

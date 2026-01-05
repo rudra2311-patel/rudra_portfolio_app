@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PhytoLens Engineering Deep Dive - Offline-first AI plant disease diagnosis">
+    <title>Engineering behind PhytoLens</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script src="js/tailwind-config.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="antialiased selection:bg-brand-green selection:text-black">
+
+    <!-- Navbar (loaded from component) -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section (loaded from component) -->
+    <div id="hero-placeholder"></div>
+
+    <!-- The rest of the content stays inline for now -->
+    <!-- You can extract these sections later -->
+    
+    <!-- Challenge Section -->
+    <section id="challenge" class="py-20 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center">The Challenge</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Problem -->
+                <div class="bg-brand-card border border-brand-border p-8 rounded-2xl relative overflow-hidden group hover:border-red-500/50 transition duration-300 card-hover">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px]"></div>
+                    <div class="relative z-10">
+                        <div class="text-sm font-mono text-red-400 mb-4">01 THE PROBLEM</div>
+                        <h3 class="text-2xl font-bold mb-4">Delayed Diagnosis & Connectivity</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Farmers in remote areas often struggle with internet connectivity. Cloud-only AI solutions fail when they are needed most—in the field.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Solution -->
+                <div class="bg-brand-card border border-brand-border p-8 rounded-2xl relative overflow-hidden group hover:border-brand-green/50 transition duration-300 card-hover">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-green/10 blur-[80px]"></div>
+                    <div class="relative z-10">
+                        <div class="text-sm font-mono text-brand-green mb-4">02 THE SOLUTION</div>
+                        <h3 class="text-2xl font-bold mb-4">Edge AI & Offline Sync</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            PhytoLens moves the "Brain" to the device. <span class="text-white font-bold">14ms inference time</span> completely offline.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All other sections remain here -->
+    <!-- (Architecture, Tech Stack, Microservices, Metrics, etc.) -->
+    <!-- See original index.html for full content -->
+
+    <!-- Footer (loaded from component) -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Component Loader Script -->
+    <script src="js/components-loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!-- Hero Section Component -->
+<section class="relative pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-green/20 blur-[100px] rounded-full pointer-events-none"></div>
+    
+    <div class="relative max-w-5xl mx-auto px-6 text-center">
+        <!-- Logo Center -->
+        <div class="w-24 h-24 mx-auto mb-8 relative group logo-container">
+            <div class="absolute inset-0 bg-glow blur-xl opacity-50 group-hover:opacity-100 transition duration-1000 animate-pulse"></div>
+            <div class="relative bg-black rounded-full p-0 flex items-center justify-center h-full w-full z-10 border-2 border-brand-green/50 group-hover:border-brand-green transition-all duration-500 shadow-lg shadow-brand-green/20 group-hover:shadow-brand-green/50">
+                <svg viewBox="0 0 100 100" fill="none" class="w-16 h-16 logo-svg">
+                    <circle cx="50" cy="50" r="45" stroke="#10B981" stroke-width="8" opacity="0.8"/>
+                    <path d="M70 25C65 20 58 18 50 18" stroke="#34D399" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+                    <path d="M50 80C50 80 25 70 25 50C25 30 50 20 50 20C50 20 75 30 75 50C75 70 50 80 50 80Z" fill="#10B981"/>
+                    <path d="M50 80V35" stroke="#065F46" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Particle dots -->
+                    <circle cx="30" cy="45" r="2" fill="#34D399" opacity="0.6"/>
+                    <circle cx="70" cy="55" r="2" fill="#34D399" opacity="0.6"/>
+                    <circle cx="50" cy="25" r="1.5" fill="#10B981" opacity="0.8"/>
+                </svg>
+            </div>
+            <!-- Floating particles -->
+            <div class="absolute top-0 left-1/2 w-2 h-2 bg-brand-green rounded-full opacity-0 group-hover:opacity-70 group-hover:animate-ping"></div>
+            <div class="absolute bottom-0 right-1/4 w-1.5 h-1.5 bg-emerald-400 rounded-full opacity-0 group-hover:opacity-60 group-hover:animate-ping" style="animation-delay: 200ms;"></div>
+            <div class="absolute top-1/4 right-0 w-1 h-1 bg-brand-green rounded-full opacity-0 group-hover:opacity-50 group-hover:animate-ping" style="animation-delay: 400ms;"></div>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+            Engineering behind<br>PhytoLens
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+            A scalable, offline-first micro-architecture for real-time plant disease diagnosis using Edge AI.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#architecture" class="px-8 py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition">Explore Architecture</a>
+            <a href="https://github.com/rudra2311-patel/agriscan-pro" target="_blank" class="px-8 py-3 border border-brand-border bg-brand-card text-white font-bold rounded-lg hover:border-brand-green transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.05-.015-2.055-3.33.72-4.035-1.605-4.035-1.605-.54-1.38-1.335-1.755-1.335-1.755-1.087-.735.09-.72.09-.72 1.2.09 1.83 1.23 1.83 1.23 1.065 1.83 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405 1.02 0 2.04.135 3 .405 2.28-1.545 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                View on GitHub
+            </a>
+        </div>
+    </div>
+</section>

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import '../../widgets/rive_background.dart';
 import '../../widgets/frosted_container.dart';
 import '../../widgets/rain_cloud.dart';
+import '../../utils/responsive_helper.dart'; // NEW: Mobile optimization helper
 import 'phone_screen_wrapper.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,11 +59,17 @@ class _HomePageState extends State<HomePage> {
     theme.heightRatio = theme.size.height / baseHeight;
     bool phone = size.width < 800;
 
+    // MOBILE OPTIMIZATION: Disable parallax on mobile for better performance
+    final bool enableParallax = ResponsiveHelper.shouldEnableParallax(context);
+
     return MouseRegion(
       onHover: (event) {
-        final double x = (event.position.dx / size.width) * 2 - 1;
-        final double y = (event.position.dy / size.height) * 2 - 1;
-        currentState.updateMousePosition(Offset(x, y));
+        // Only process mouse events on desktop (performance optimization)
+        if (enableParallax) {
+          final double x = (event.position.dx / size.width) * 2 - 1;
+          final double y = (event.position.dy / size.height) * 2 - 1;
+          currentState.updateMousePosition(Offset(x, y));
+        }
       },
       child: Scaffold(
         body: Stack(
@@ -82,8 +89,14 @@ class _HomePageState extends State<HomePage> {
             const RiveBackground(),
 
             // This Stack contains your original parallax background elements
+            // DESKTOP: Full parallax effects, MOBILE: Reduced effects for performance
             Consumer<CurrentState>(
               builder: (context, state, child) {
+                if (!enableParallax) {
+                  // MOBILE: Static background, no parallax
+                  return child!;
+                }
+                // DESKTOP: Full parallax with mouse tracking
                 final dx = state.mousePosition.dx;
                 final dy = state.mousePosition.dy;
                 final rotationY = (dx * dx.abs()) * 0.05;
@@ -120,343 +133,381 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Layer 3: Your main UI content
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    /// Left side frosted Containers
-                    Consumer<CurrentState>(
-                      builder: (context, state, child) {
-                        final dx = state.mousePosition.dx;
-                        final dy = state.mousePosition.dy;
-                        const baseRotationY = -0.06;
-                        final dynamicRotationY = (dx * dx.abs()) * 0.1;
-                        final dynamicRotationX = -(dy * dy.abs()) * 0.1;
-                        return Transform(
-                          alignment: FractionalOffset.center,
-                          transform: Matrix4.identity()
-                            ..setEntry(3, 2, 0.001)
-                            ..rotateX(dynamicRotationX)
-                            ..rotateY(baseRotationY + dynamicRotationY),
-                          child: child,
-                        );
-                      },
-                      child: phone
-                          ? Container()
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FrostedWidget(
-                                  height: 395 * theme.heightRatio,
-                                  width: 247.5 * theme.widthRatio,
-                                  //
-                                  // REPLACE the existing `childW` property with the new Column below
-                                  //
-                                  // In home_page.dart, inside the top-left FrostedWidget
-                                  childW: Column(
-                                    mainAxisAlignment: MainAxisAlignment
-                                        .start, // Align to the top
-                                    children: [
-                                      // Use SizedBox for fixed spacing from the top
-                                      const SizedBox(height: 30),
-
-                                      // Your title text
-                                      AutoSizeText(
-                                        'Designer',
-                                        style: GoogleFonts.exo(
-                                          fontSize: 22,
-                                          color: Colors.white.withOpacity(0.8),
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        maxLines: 1,
-                                      ),
-
-                                      // The Rive Avatar
-                                      const Expanded(
-                                        child: RiveAvatar(),
-                                      ),
-
-                                      // Your name text
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Center(
-                                          child: AutoSizeText(
-                                            'RuDraPatel',
-                                            style: GoogleFonts.exo(
-                                              fontSize: 35,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            maxFontSize: 35,
-                                            minFontSize: 15,
-                                            maxLines: 1,
-                                          ),
-                                        ),
-                                      ),
-
-                                      // Use SizedBox for fixed spacing at the bottom
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                                FrostedWidget(
-                                  onPressed: () {
-                                    currentState.launchInBrowser(leetcode);
-                                  },
-                                  childW: Center(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/icons/topMate.png",
-                                            width: 50 *
-                                                theme.widthRatio *
-                                                theme.heightRatio,
-                                            height: 50 *
-                                                theme.widthRatio *
-                                                theme.heightRatio,
-                                          ),
-                                          SizedBox(
-                                            height: 10 * theme.heightRatio,
-                                          ),
-                                          Flexible(
-                                            child: AutoSizeText(
-                                              "Let's connect!",
-                                              style: GoogleFonts.exo(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 28 *
-                                                    theme.widthRatio *
-                                                    theme.heightRatio,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                              maxFontSize: 28,
-                                              minFontSize: 15,
-                                            ),
-                                          ),
-                                        ],
-                                      ).animate().fadeIn(
-                                          delay: 1.seconds,
-                                          duration: .7.seconds),
-                                    ),
-                                  ),
-                                  height: 175.5 * theme.heightRatio,
-                                  width: 245 * theme.widthRatio,
-                                ),
-                              ],
-                            )
-                              .animate()
-                              .fadeIn(
-                                  delay: 500.ms,
-                                  duration: 600.ms,
-                                  curve: Curves.easeOut)
-                              .slideX(
-                                  begin: -0.5,
-                                  duration: 600.ms,
-                                  curve: Curves.easeOut),
+            // MOBILE: Wrapped in SafeArea for notch/home indicator support
+            SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: ResponsiveHelper.getResponsiveSpacing(
+                      context,
+                      10,
+                      5,
                     ),
-
-                    // main mobile screen
-                    SizedBox(
-                      height: size.height - 100,
-                      child: Consumer<CurrentState>(
-                        builder: (context, _, __) {
-                          return DeviceFrame(
-                            device: currentState.currentDevice,
-                            screen: Container(
-                              decoration: BoxDecoration(
-                                  gradient: currentState.bgGradient),
-                              child: ScreenWrapper(
-                                childG: currentState.currentScreen,
-                              ),
-                            ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      /// Left side frosted Containers
+                      Consumer<CurrentState>(
+                        builder: (context, state, child) {
+                          if (!enableParallax) {
+                            // MOBILE: No parallax transformation
+                            return child!;
+                          }
+                          // DESKTOP: Full parallax effect
+                          final dx = state.mousePosition.dx;
+                          final dy = state.mousePosition.dy;
+                          const baseRotationY = -0.06;
+                          final dynamicRotationY = (dx * dx.abs()) * 0.1;
+                          final dynamicRotationX = -(dy * dy.abs()) * 0.1;
+                          return Transform(
+                            alignment: FractionalOffset.center,
+                            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.001)
+                              ..rotateX(dynamicRotationX)
+                              ..rotateY(baseRotationY + dynamicRotationY),
+                            child: child,
                           );
                         },
-                      ),
-                    )
-                        .animate()
-                        .fadeIn(duration: 600.ms, curve: Curves.easeOut)
-                        .slideY(
-                            begin: 0.2,
-                            duration: 600.ms,
-                            curve: Curves.easeOut),
+                        child: phone
+                            ? Container()
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FrostedWidget(
+                                    height: 395 * theme.heightRatio,
+                                    width: 247.5 * theme.widthRatio,
+                                    //
+                                    // REPLACE the existing `childW` property with the new Column below
+                                    //
+                                    // In home_page.dart, inside the top-left FrostedWidget
+                                    childW: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start, // Align to the top
+                                      children: [
+                                        // Use SizedBox for fixed spacing from the top
+                                        const SizedBox(height: 30),
 
-                    /// Right side frosted containers
-                    Consumer<CurrentState>(
-                      builder: (context, state, child) {
-                        final dx = state.mousePosition.dx;
-                        final dy = state.mousePosition.dy;
-                        const baseRotationY = 0.06;
-                        final dynamicRotationY = (dx * dx.abs()) * 0.1;
-                        final dynamicRotationX = -(dy * dy.abs()) * 0.1;
-                        return Transform(
-                          alignment: FractionalOffset.center,
-                          transform: Matrix4.identity()
-                            ..setEntry(3, 2, 0.001)
-                            ..rotateX(dynamicRotationX)
-                            ..rotateY(baseRotationY + dynamicRotationY),
-                          child: child,
-                        );
-                      },
-                      child: phone
-                          ? Container()
-                          : Column(
-                              children: [
-                                FrostedWidget(
-                                  height: 395 * theme.heightRatio,
-                                  width: 247.5 * theme.widthRatio,
-                                  childW: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Wrap(
-                                        children: [
-                                          ...List.generate(
-                                            colorPalette.length,
-                                            (index) => Consumer<CurrentState>(
-                                              builder: (context, _, __) {
-                                                return AnimatedButton(
-                                                  width: 50 * theme.widthRatio,
-                                                  height: 50 * theme.widthRatio,
-                                                  color:
-                                                      colorPalette[index].color,
-                                                  onPressed: () {
-                                                    currentState
-                                                        .changeGradient(index);
-                                                  },
-                                                  child: const SizedBox(),
-                                                );
-                                              },
+                                        // Your title text
+                                        AutoSizeText(
+                                          'Designer',
+                                          style: GoogleFonts.exo(
+                                            fontSize: 22,
+                                            color:
+                                                Colors.white.withOpacity(0.8),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+
+                                        // The Rive Avatar
+                                        const Expanded(
+                                          child: RiveAvatar(),
+                                        ),
+
+                                        // Your name text
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                          child: Center(
+                                            child: AutoSizeText(
+                                              'RuDraPatel',
+                                              style: GoogleFonts.exo(
+                                                fontSize: 35,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxFontSize: 35,
+                                              minFontSize: 15,
+                                              maxLines: 1,
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                          ),
+                                        ),
+
+                                        // Use SizedBox for fixed spacing at the bottom
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.only(top: 0, bottom: 10),
-                                  child: FrostedWidget(
+                                  FrostedWidget(
+                                    onPressed: () {
+                                      currentState.launchInBrowser(leetcode);
+                                    },
                                     childW: Center(
                                       child: Container(
-                                        margin: const EdgeInsets.all(10),
-                                        padding: EdgeInsets.all(
-                                            10 * theme.widthRatio),
+                                        padding: const EdgeInsets.all(10),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            AutoSizeText(
-                                              '"Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less"',
-                                              style: GoogleFonts.inter(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                              maxFontSize: 25,
-                                              minFontSize: 10,
-                                              maxLines: 3,
+                                            Image.asset(
+                                              "assets/icons/topMate.png",
+                                              width: 50 *
+                                                  theme.widthRatio *
+                                                  theme.heightRatio,
+                                              height: 50 *
+                                                  theme.widthRatio *
+                                                  theme.heightRatio,
                                             ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
+                                            SizedBox(
+                                              height: 10 * theme.heightRatio,
+                                            ),
+                                            Flexible(
                                               child: AutoSizeText(
-                                                '-Marie Curie',
-                                                style: GoogleFonts.inter(
-                                                  color: Colors.white
-                                                      .withOpacity(0.6),
-                                                  fontWeight: FontWeight.w400,
+                                                "Let's connect!",
+                                                style: GoogleFonts.exo(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 28 *
+                                                      theme.widthRatio *
+                                                      theme.heightRatio,
                                                 ),
-                                                maxFontSize: 12,
-                                                minFontSize: 6,
-                                                maxLines: 1,
+                                                textAlign: TextAlign.center,
+                                                maxFontSize: 28,
+                                                minFontSize: 15,
                                               ),
                                             ),
                                           ],
-                                        ),
+                                        ).animate().fadeIn(
+                                            delay: 1.seconds,
+                                            duration: .7.seconds),
                                       ),
-                                    ).animate().fadeIn(
-                                        delay: 1.seconds, duration: .7.seconds),
+                                    ),
                                     height: 175.5 * theme.heightRatio,
                                     width: 245 * theme.widthRatio,
                                   ),
-                                ),
-                              ],
-                            )
-                              .animate()
-                              .fadeIn(
-                                  delay: 700.ms,
-                                  duration: 600.ms,
-                                  curve: Curves.easeOut)
-                              .slideX(
-                                  begin: 0.5,
-                                  duration: 600.ms,
-                                  curve: Curves.easeOut),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10 * theme.heightRatio),
+                                ],
+                              )
+                                .animate()
+                                .fadeIn(
+                                    delay: 500.ms,
+                                    duration: 600.ms,
+                                    curve: Curves.easeOut)
+                                .slideX(
+                                    begin: -0.5,
+                                    duration: 600.ms,
+                                    curve: Curves.easeOut),
+                      ),
 
-                /// bottom button for device selection
-                Selector<CurrentState, DeviceInfo>(
-                  selector: (context, p1) => p1.currentDevice,
-                  builder: (context, _, __) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ...List.generate(devices.length, (index) {
-                          return AnimatedButton(
-                            width: 37.5,
-                            height: 37.5,
-                            color: Colors.black,
-                            onPressed: () {
-                              currentState.changeSelectedDevice(
-                                devices[index].device,
-                              );
-                            },
-                            child: Center(
-                              child: Icon(
-                                devices[index].icon,
-                                color: Colors.white,
-                                size: 25,
+                      // main mobile screen
+                      // MOBILE: Better safe area handling for notches/home indicators
+                      SizedBox(
+                        height: ResponsiveHelper.getMobileSafeHeight(
+                          context,
+                          size.height - 100,
+                        ),
+                        child: Consumer<CurrentState>(
+                          builder: (context, _, __) {
+                            return DeviceFrame(
+                              device: currentState.currentDevice,
+                              screen: Container(
+                                decoration: BoxDecoration(
+                                    gradient: currentState.bgGradient),
+                                child: ScreenWrapper(
+                                  childG: currentState.currentScreen,
+                                ),
                               ),
-                            ),
+                            );
+                          },
+                        ),
+                      )
+                          .animate()
+                          .fadeIn(duration: 600.ms, curve: Curves.easeOut)
+                          .slideY(
+                              begin: 0.2,
+                              duration: 600.ms,
+                              curve: Curves.easeOut),
+
+                      /// Right side frosted containers
+                      Consumer<CurrentState>(
+                        builder: (context, state, child) {
+                          if (!enableParallax) {
+                            // MOBILE: No parallax transformation
+                            return child!;
+                          }
+                          // DESKTOP: Full parallax effect
+                          final dx = state.mousePosition.dx;
+                          final dy = state.mousePosition.dy;
+                          const baseRotationY = 0.06;
+                          final dynamicRotationY = (dx * dx.abs()) * 0.1;
+                          final dynamicRotationX = -(dy * dy.abs()) * 0.1;
+                          return Transform(
+                            alignment: FractionalOffset.center,
+                            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.001)
+                              ..rotateX(dynamicRotationX)
+                              ..rotateY(baseRotationY + dynamicRotationY),
+                            child: child,
                           );
-                        }),
-                      ],
-                    );
-                  },
-                )
-              ],
+                        },
+                        child: phone
+                            ? Container()
+                            : Column(
+                                children: [
+                                  FrostedWidget(
+                                    height: 395 * theme.heightRatio,
+                                    width: 247.5 * theme.widthRatio,
+                                    childW: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Wrap(
+                                          children: [
+                                            ...List.generate(
+                                              colorPalette.length,
+                                              (index) => Consumer<CurrentState>(
+                                                builder: (context, _, __) {
+                                                  return AnimatedButton(
+                                                    width:
+                                                        50 * theme.widthRatio,
+                                                    height:
+                                                        50 * theme.widthRatio,
+                                                    color: colorPalette[index]
+                                                        .color,
+                                                    onPressed: () {
+                                                      currentState
+                                                          .changeGradient(
+                                                              index);
+                                                    },
+                                                    child: const SizedBox(),
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 0, bottom: 10),
+                                    child: FrostedWidget(
+                                      childW: Center(
+                                        child: Container(
+                                          margin: const EdgeInsets.all(10),
+                                          padding: EdgeInsets.all(
+                                              10 * theme.widthRatio),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              AutoSizeText(
+                                                '"Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less"',
+                                                style: GoogleFonts.inter(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                                maxFontSize: 25,
+                                                minFontSize: 10,
+                                                maxLines: 3,
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: AutoSizeText(
+                                                  '-Marie Curie',
+                                                  style: GoogleFonts.inter(
+                                                    color: Colors.white
+                                                        .withOpacity(0.6),
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                  maxFontSize: 12,
+                                                  minFontSize: 6,
+                                                  maxLines: 1,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ).animate().fadeIn(
+                                          delay: 1.seconds,
+                                          duration: .7.seconds),
+                                      height: 175.5 * theme.heightRatio,
+                                      width: 245 * theme.widthRatio,
+                                    ),
+                                  ),
+                                ],
+                              )
+                                .animate()
+                                .fadeIn(
+                                    delay: 700.ms,
+                                    duration: 600.ms,
+                                    curve: Curves.easeOut)
+                                .slideX(
+                                    begin: 0.5,
+                                    duration: 600.ms,
+                                    curve: Curves.easeOut),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10 * theme.heightRatio),
+
+                  /// bottom button for device selection
+                  Selector<CurrentState, DeviceInfo>(
+                    selector: (context, p1) => p1.currentDevice,
+                    builder: (context, _, __) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ...List.generate(devices.length, (index) {
+                            return AnimatedButton(
+                              width: 37.5,
+                              height: 37.5,
+                              color: Colors.black,
+                              onPressed: () {
+                                currentState.changeSelectedDevice(
+                                  devices[index].device,
+                                );
+                              },
+                              child: Center(
+                                child: Icon(
+                                  devices[index].icon,
+                                  color: Colors.white,
+                                  size: 25,
+                                ),
+                              ),
+                            );
+                          }),
+                        ],
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
 
             // NEW: Add a Toggle Button to switch between Day and Night
+            // MOBILE: Adjusted positioning for smaller screens
             Positioned(
-              top: 40,
-              right: 40,
-              child: IconButton(
-                icon: Consumer<CurrentState>(builder: (context, state, child) {
-                  // The icon changes based on the current mode
-                  return Icon(
-                    state.isDarkMode
-                        ? Icons.wb_sunny_outlined
-                        : Icons.nights_stay_outlined,
-                    color: Colors.white,
-                    size: 30,
-                  );
-                }),
-                onPressed: () {
-                  // This calls the function that changes the theme and Rive state
-                  currentState.toggleTheme();
-                },
+              top: ResponsiveHelper.isMobile(context) ? 20 : 40,
+              right: ResponsiveHelper.isMobile(context) ? 20 : 40,
+              child: SafeArea(
+                child: IconButton(
+                  icon:
+                      Consumer<CurrentState>(builder: (context, state, child) {
+                    // The icon changes based on the current mode
+                    return Icon(
+                      state.isDarkMode
+                          ? Icons.wb_sunny_outlined
+                          : Icons.nights_stay_outlined,
+                      color: Colors.white,
+                      size: ResponsiveHelper.getResponsiveFontSize(
+                        context,
+                        30,
+                        24,
+                      ),
+                    );
+                  }),
+                  onPressed: () {
+                    // This calls the function that changes the theme and Rive state
+                    currentState.toggleTheme();
+                  },
+                ),
               ),
             ),
           ],

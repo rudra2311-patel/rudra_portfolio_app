@@ -222,12 +222,12 @@ final List<JobExperience> jobExperiences = [
 ];
 
 const String resume =
-    "https://drive.google.com/file/d/1N5JOPis97cetgoR9GDeVh3asTPASTsj4/view";
+    "https://drive.google.com/file/d/1nLDLi9O7za90JVLTUAdBjWr7dC56UCLW/view?usp=sharing";
 const String linkedIn = "https://www.linkedin.com/in/rudra-patel-32859425b/";
 const String github = "https://github.com/rudra2311-patel";
 const String codeforces = "https://codeforces.com/profile/RuDrA1e3";
 const String resumeLink =
-    "https://drive.google.com/file/d/1LO3Km6fFkJVW92MNXRLSYl--E9YlTHJd/view";
+    "https://drive.google.com/file/d/1nLDLi9O7za90JVLTUAdBjWr7dC56UCLW/view?usp=sharing";
 const String email = "rudrawillofd@gmail.com";
 const String leetcode = "https://leetcode.com/u/K2HtnEmE3O/";
 const String playApps =
